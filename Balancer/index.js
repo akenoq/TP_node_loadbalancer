@@ -253,6 +253,8 @@ let clearQueueInter = setInterval(() => {
 
 //////////////////////////////////////////////////////////////////
 
+// datadog
+
 let StatsD = require('hot-shots'),
     client = new StatsD();
 
@@ -263,7 +265,6 @@ client.socket.on('error', function(error) {
 });
 
 let metricInter = setInterval(() => {
-    //
     // Gauge: Gauge a stat by a specified amount
     client.gauge('my_rps', parseInt(rps));
     rps = 0;

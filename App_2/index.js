@@ -3,6 +3,8 @@
 const portNumber = 5020;
 
 ///////////////////////////////////////////////////////
+let rps = 0;
+///////////////////////////////////////////////////////
 
 let express = require("express");
 let app = express();
@@ -46,6 +48,7 @@ app.post('/*', (request, response) => {
         console.log("Answer: " + cube);
         console.log("------------------------------");
         response.end(cube.toString());
+        rps++;
     });
 });
 
@@ -59,4 +62,24 @@ app.get('/*', (request, response) => {
     console.log("Answer: " + cube);
     console.log("------------------------------");
     response.end(cube.toString());
+    rps++;
 });
+
+//////////////////////////////////////////////////////////////////
+
+// datadog
+
+let StatsD = require('hot-shots'),
+    client = new StatsD();
+
+// Catch socket errors so they don't go unhandled, as explained
+// in the Errors section below
+client.socket.on('error', function(error) {
+    console.error("Error in socket: ", error);
+});
+
+let metricInter = setInterval(() => {
+    // Gauge: Gauge a stat by a specified amount
+    client.gauge('my_rps_2', parseInt(rps));
+    rps = 0;
+}, 1000);
