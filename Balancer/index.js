@@ -54,7 +54,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-let port = process.env.PORT || 5333;
+let port = 80;
 app.listen(port);
 console.log("Server works on port " + port);
 console.log("-----------------------------------");
