@@ -1,0 +1,24 @@
+{
+  "name": "Balancer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http": "0.0.0",
+    "http-get": "^0.5.10",
+    "http-post": "^0.1.1",
+    "request": "^2.85.0"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "hot-shots": "^5.2.0"
+  }
+}
