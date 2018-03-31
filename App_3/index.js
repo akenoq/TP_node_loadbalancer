@@ -1,6 +1,6 @@
 "use strict";
 
-const portNumber = 5030;
+const portNumber = 80;
 
 ///////////////////////////////////////////////////////
 let rps = 0;
@@ -9,7 +9,7 @@ let rps = 0;
 let express = require("express");
 let app = express();
 
-let port = process.env.PORT || portNumber;
+let port = portNumber;
 app.listen(port);
 console.log("Server works on port " + port);
 console.log("-----------------------------------");

@@ -1,8 +1,8 @@
 {
   "urlsArray": [
-    "http://localhost:5010",
-    "http://localhost:5020",
-    "http://localhost:5030"
+    "http://10.138.0.3",
+    "http://10.138.0.4",
+    "http://10.138.0.5"
   ],
   "restartTimeSeconds": "7"
 }
