@@ -6,11 +6,13 @@ import urllib2
 ######################################################################
 
 def getRandNumber(n):
+	# random [0, n-1]
 	r = int(random.random() * 1000) % n
 	return r
 
 def getRandChar():
 	s = "abcdefghijklmnopqrstuvwxyz"
+	# [0, len-1]
 	n = len(s)
 	v = getRandNumber(n)
 	c = s[v]
@@ -48,20 +50,22 @@ def assertEqual(valueReal, valueNormal):
 		print(message)
 
 ######################################################################
+# send s (num for cube) and coef kkk => (n^3) * kkk
+def sendGet(s, kkk):
+	url = 'http://localhost:5333/' + getRandString(25) + "/" + s
+	req = urllib2.Request(url);
+	# add header kkk
+	req.add_header('kkk', str(kkk));
+	# obj ans from host
+	resp = urllib2.urlopen(req);
+	# body of ans
+	content = resp.read();
+	return content;
 
-def getUrl(s):
-	url = 'http://35.185.228.154/' + s + '/' + getRandString(25)
-	return url
-
-def sendGet(s):
-	url = 'http://35.185.228.154/' + getRandString(25) + "/" + s
-	data = urllib.urlopen(url).read()
-	return data
-
-def sendPost(s, body):
-	headers = { 'User-Agent' : 'python urllib2' }
+def sendPost(s, body, kkk):
+	headers = { 'User-Agent' : 'python urllib2', 'kkk' : str(kkk) }
 	data = body
-	url = getUrl(s)
+	url = 'http://localhost:5333/' + s + '/' + getRandString(25)
 	req = urllib2.Request(url, data, headers)
 	response = urllib2.urlopen(req)
 	result = response.read()
@@ -75,16 +79,20 @@ query = 0
 while(True):
 	query += 1;
 	print( "POST Query: " + str(query) );
-	n = getRandNumber(300) + 5;
-	server_answer = sendPost( "api", str(n) );
-	normal_answer = n * n * n;
+	n = getRandNumber(300) + 5; # [5, 304]
+	k = getRandNumber(15) + 2; # [2, 16]
+	# /api/randstr
+	server_answer = sendPost( "api", str(n), str(k) );
+	normal_answer = n * n * n * k;
 	assertEqual( str(server_answer), str(normal_answer) );
 
 	query += 1;
 	print( "GET Query: " + str(query) );
 	n = getRandNumber(300) + 5;
-	server_answer = sendGet(str(n));
-	normal_answer = n * n * n;
+	k = getRandNumber(15) + 2;
+	# /randstr/333
+	server_answer = sendGet(str(n), str(k));
+	normal_answer = n * n * n * k;
 	assertEqual( str(server_answer), str(normal_answer) );
 
 
